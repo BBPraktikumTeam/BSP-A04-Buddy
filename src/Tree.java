@@ -6,7 +6,7 @@
  * @author Kai Bielenberg (kai.bielenberg@haw-hamburg.de)
  * 
  */
-public class Tree implements TreeObject {
+public class Tree {
     private final int blockSize;
     private Integer dataSize;
     private Tree left;
@@ -20,10 +20,10 @@ public class Tree implements TreeObject {
     }
 
     public boolean malloc(int dataSize) {
-        // TODO Alloc rückgabe StartAdress, -1 bei Error
+        // TODO Alloc rÃ¼ckgabe StartAdress, -1 bei Error
         if (dataSize > blockSize)
             return false;
-        System.out.println(dataSize);
+//        System.out.println(dataSize);
         int allocatedSize = 2;
         while (allocatedSize < dataSize)
             allocatedSize *= 2;
@@ -91,26 +91,6 @@ public class Tree implements TreeObject {
             return false;
     }
 
-    // public boolean clean() {
-    // boolean changed = true;
-    // while (changed) {
-    // changed = false;
-    // if (left != null) {
-    // if (left.isEmptyLeaf()) {
-    // left = null;
-    // changed = false;
-    // } else
-    // changed=!left.clean();
-    // }
-    // if (right != null) {
-    // if (right.isEmptyLeaf()) {
-    // right = null;
-    // changed = false;
-    // } else
-    // changed=!right.clean();
-    // }
-    // }
-    // }
 
     public boolean isEmptyLeaf() {
         return isLeaf() && dataSize == null;
@@ -123,12 +103,6 @@ public class Tree implements TreeObject {
         return left == null && right == null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see TreeObject#size()
-     */
-    @Override
     public int blockSize() {
         return blockSize;
     }
@@ -141,12 +115,7 @@ public class Tree implements TreeObject {
         return right;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see TreeObject#parent()
-     */
-    @Override
+
     public Tree parent() {
         return parent;
     }
