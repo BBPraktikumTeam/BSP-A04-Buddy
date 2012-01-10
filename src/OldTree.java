@@ -6,42 +6,40 @@
  * @author Kai Bielenberg (kai.bielenberg@haw-hamburg.de)
  * 
  */
-public class Tree {
+public class OldTree {
     private final int blockSize;
     private Integer dataSize;
-    private Tree left;
-    private Tree right;
-    private Tree parent;
+    private OldTree left;
+    private OldTree right;
+    private OldTree parent;
     private int startAdress;
 
-    public Tree(int blockSize, int startAdress) {
+    public OldTree(int blockSize, int startAdress) {
         this.blockSize = blockSize;
         this.startAdress = startAdress;
     }
 
-    public int malloc(int dataSize) {
+    public boolean malloc(int dataSize) {
         // TODO Alloc rückgabe StartAdress, -1 bei Error
         if (dataSize > blockSize)
-            return -1;
+            return false;
 //        System.out.println(dataSize);
         int allocatedSize = 2;
         while (allocatedSize < dataSize)
             allocatedSize *= 2;
         if (isLeaf() && this.dataSize != null)
-            return -1;
+            return false;
         else if (isLeaf() && allocatedSize == blockSize
                 && this.dataSize == null) {
             this.dataSize = dataSize;
-            return startAdress;
+            return true;
         } else if (left == null) {
-            left = new Tree(blockSize / 2, startAdress);
+            left = new OldTree(blockSize / 2, startAdress);
         } else if (right == null) {
-            right = new Tree(blockSize / 2, startAdress + (blockSize / 2));
+            right = new OldTree(blockSize / 2, startAdress + (blockSize / 2));
         }
         // TODO: Refactor
-        int leftAdress=left.malloc(dataSize);
-        if (leftAdress==-1) return right.malloc(dataSize); 
-        else return leftAdress; 
+        return left.malloc(dataSize) || right.malloc(dataSize);
     }
 
     public boolean dealloc(int memoryAdress) {
@@ -109,16 +107,16 @@ public class Tree {
         return blockSize;
     }
 
-    public Tree left() {
+    public OldTree left() {
         return left;
     }
 
-    public Tree right() {
+    public OldTree right() {
         return right;
     }
 
 
-    public Tree parent() {
+    public OldTree parent() {
         return parent;
     }
 

@@ -13,7 +13,8 @@ public class Simulation {
      */
     public static void main(String[] args) {
         Tree tree=new Tree(64,0);
-        tree.malloc(4);
+        System.out.println(tree.malloc(4));
+        System.out.println(tree);
         tree.malloc(4);
         tree.malloc(4);
         tree.dealloc(0);
